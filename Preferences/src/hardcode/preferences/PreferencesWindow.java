@@ -38,7 +38,7 @@ public class PreferencesWindow extends JFrame{
 	private PreferencesWindow me;
 	private JComboBox<String> propertiesComboBox;
 	private JPanel centerPanel;
-	private JButton cancelButton;
+	//private JButton cancelButton;
 	private JButton saveButton;
 	private BorderLayout contentPaneBorderLayoutMgr;
 	private String title;
@@ -47,9 +47,7 @@ public class PreferencesWindow extends JFrame{
 		this.setTitle(title);
 		this.title = title;
 		settingsEntries = new LinkedList<SettingsEntry>();
-		
 		me = this;
-		
 		initFrame(propertiesComboBoxEntries, currentComboBoxEntry);
 	}
 	
@@ -67,20 +65,20 @@ public class PreferencesWindow extends JFrame{
 		
 		initCenterPanel();
 		
-		cancelButton = new JButton("Cancel");
-		cancelButton.addActionListener(new ActionListener() {
-			public void actionPerformed (ActionEvent e) {
-				close();
-			}
-		});
+//		cancelButton = new JButton("Cancel");
+//		cancelButton.addActionListener(new ActionListener() {
+//			public void actionPerformed (ActionEvent e) {
+//				close();
+//			}
+//		});
 		
-		saveButton = new JButton("Save");
+		saveButton = new JButton("OK");
 
 		JPanel bottomPanel = new JPanel();
 		bottomPanel.setLayout(new BoxLayout(bottomPanel, BoxLayout.LINE_AXIS));
 		bottomPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 		bottomPanel.add(Box.createHorizontalGlue());
-		bottomPanel.add(cancelButton);
+//		bottomPanel.add(cancelButton);
 		bottomPanel.add(Box.createRigidArea(new Dimension(10, 0)));
 		bottomPanel.add(saveButton);
 		getContentPane().add(bottomPanel, BorderLayout.PAGE_END);
