@@ -38,7 +38,6 @@ public class PreferencesWindow extends JFrame{
 	private PreferencesWindow me;
 	private JComboBox<String> propertiesComboBox;
 	private JPanel centerPanel;
-	//private JButton cancelButton;
 	private JButton saveButton;
 	private BorderLayout contentPaneBorderLayoutMgr;
 	private String title;
@@ -65,20 +64,12 @@ public class PreferencesWindow extends JFrame{
 		
 		initCenterPanel();
 		
-//		cancelButton = new JButton("Cancel");
-//		cancelButton.addActionListener(new ActionListener() {
-//			public void actionPerformed (ActionEvent e) {
-//				close();
-//			}
-//		});
-		
 		saveButton = new JButton("OK");
 
 		JPanel bottomPanel = new JPanel();
 		bottomPanel.setLayout(new BoxLayout(bottomPanel, BoxLayout.LINE_AXIS));
 		bottomPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 		bottomPanel.add(Box.createHorizontalGlue());
-//		bottomPanel.add(cancelButton);
 		bottomPanel.add(Box.createRigidArea(new Dimension(10, 0)));
 		bottomPanel.add(saveButton);
 		getContentPane().add(bottomPanel, BorderLayout.PAGE_END);
@@ -157,11 +148,6 @@ public class PreferencesWindow extends JFrame{
 	
 	public List<SettingsEntry> getSettingsEntries() {
 		return settingsEntries;
-	}
-	
-	private void close() {
-		this.setVisible(false);
-		this.dispose();
 	}
 	
 	@Override
