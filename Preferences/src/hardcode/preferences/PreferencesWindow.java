@@ -1,4 +1,4 @@
-package embewee.preferences;
+package hardcode.preferences;
 
 
 import java.awt.BorderLayout;

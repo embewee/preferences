@@ -1,4 +1,4 @@
-package embewee.preferences;
+package hardcode.preferences;
 
 
 public class SettingsEntry {	
