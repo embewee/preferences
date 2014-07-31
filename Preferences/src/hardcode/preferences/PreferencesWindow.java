@@ -154,13 +154,8 @@ public class PreferencesWindow extends JFrame{
 	public void setVisible(boolean b) {
 		//set size and center window
 		int height = settingsEntries.size() * 45 + 100;
-		
-		System.out.println("settingsEntries=" + settingsEntries.size());
-		System.out.println("height=" + height);
-		
 		this.setSize(350, height); //FIXME find better formula
 		this.setLocationRelativeTo(null);
-		
 		super.setVisible(b);
 	}
 	

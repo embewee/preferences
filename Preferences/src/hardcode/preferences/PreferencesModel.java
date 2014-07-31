@@ -13,23 +13,13 @@ import java.util.InvalidPropertiesFormatException;
 import java.util.Properties;
 
 public class PreferencesModel {
-	//properties
 	private Properties properties;
-	//addition information for properties. May not be present.
-	private Properties auxProperties;
 	private String filename;
 	private boolean changed;
 	
 	public PreferencesModel(String filename) throws InvalidPropertiesFormatException, FileNotFoundException, IOException {
 		this.filename = filename;
 		this.properties = loadPropertiesFile(filename);
-		try {
-			//cut .xml, then add _aux.xml
-			String auxFilename = filename.substring(0, filename.length() - 4) + PreferencesController.AUX;
-			this.auxProperties = loadPropertiesFile(auxFilename);
-		} catch (FileNotFoundException e) {
-			this.auxProperties = null;
-		}
 		changed = false;
 	}
 	
@@ -53,44 +43,37 @@ public class PreferencesModel {
 	}
 	
 	public PreferencesController.Type getTypeFor(String propertyName) {
-		if (auxProperties == null) {
-			return PreferencesController.Type.TEXT;
-		} else if (!auxProperties.containsKey(propertyName + PreferencesController.TYPE)) {
-			return PreferencesController.Type.TEXT;
-		} else {
-			String typeString = auxProperties.getProperty(propertyName + PreferencesController.TYPE);
+		if(properties.containsKey(PreferencesController.PREFIX_TYPE + propertyName)) {
+			String typeString = properties.getProperty(PreferencesController.PREFIX_TYPE + propertyName);
 			PreferencesController.Type type = PreferencesController.Type.TEXT; //default
 			try {
 				type = PreferencesController.Type.valueOf(typeString);
 			} catch (Exception e) {
-				System.out.println("Could not determine type of " + propertyName);
-				//TODO: handle exception
+				return PreferencesController.Type.TEXT;
 			}
 			return type;
+		} else {
+			return PreferencesController.Type.TEXT;
 		}
 	}
 	
 	public String getTitleFor(String propertyName) {
-		if (auxProperties == null) {
-			return null;
-		} else if (!auxProperties.containsKey(propertyName + PreferencesController.TITLE)) {
-			return null;
+		if(properties.containsKey(PreferencesController.PREFIX_TITLE + propertyName)) {
+			return properties.getProperty(PreferencesController.PREFIX_TITLE + propertyName);
 		} else {
-			return auxProperties.getProperty(propertyName + PreferencesController.TITLE); 
+			return propertyName;
 		}
 	}
 	
 	public String[] getValuesFor(String propertyName) {
-		if (auxProperties == null) {
-			return null;
-		} else if (!auxProperties.containsKey(propertyName + PreferencesController.VALUES)) {
-			return null;
-		} else {
-			String[] values = auxProperties.getProperty(propertyName + PreferencesController.VALUES).split(",");
+		if(properties.containsKey(PreferencesController.PREFIX_VALUES + propertyName)) {
+			String[] values = properties.getProperty(PreferencesController.PREFIX_VALUES + propertyName).split(",");
 			for(int i = 0; i < values.length; i++) {
 				values[i] = values[i].trim();
 			}
-			return values;	
+			return values;
+		} else {
+			return null;
 		}
 	}
 

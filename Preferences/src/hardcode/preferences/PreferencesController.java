@@ -16,10 +16,10 @@ import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 
 public class PreferencesController {
-	public final static String AUX = "_aux.xml"; //AUX + filename
-	public final static String TYPE = "_type"; //propertyName + TYPE
-	public final static String TITLE = "_title"; //propertyName + TITLE
-	public final static String VALUES = "_values"; //propertyName + VALUES	
+	public final static String PREFIX = "#";
+	public final static String PREFIX_TYPE = PREFIX + "TYPE__";
+	public final static String PREFIX_TITLE = PREFIX + "TITLE__";
+	public final static String PREFIX_VALUES = PREFIX + "VALUES__";
 	
 	enum Type {
 		TEXT,
@@ -49,7 +49,7 @@ public class PreferencesController {
 			controlDirectory(title, file);
 			this.directory = file;
 		} else {
-			JOptionPane.showMessageDialog(window, "Could not determine input file/directory.", title, JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(window, "Could not determine input file or directory: " + fileOrDirName, title, JOptionPane.ERROR_MESSAGE);
 		}
 	}
 	
@@ -59,9 +59,7 @@ public class PreferencesController {
 		for (File fileEntry : directory.listFiles()) {
 	        if (fileEntry.isFile()) {
 	            String fileName = fileEntry.getName();
-	            if(! fileName.endsWith(AUX)) {
-	            	fileNamesVector.add(fileName);
-	            }
+            	fileNamesVector.add(fileName);
 	        }
 	    }
 		java.util.Collections.sort(fileNamesVector);	
@@ -106,8 +104,10 @@ public class PreferencesController {
 		
 		while(keys.hasMoreElements()) {
 			String key = keys.nextElement();
-			SettingsEntry entry = new SettingsEntry(key, model.getTypeFor(key), model.getProperty(key), model.getTitleFor(key), model.getValuesFor(key));
+			if(!key.startsWith(PREFIX)) {
+				SettingsEntry entry = new SettingsEntry(key, model.getTypeFor(key), model.getProperty(key), model.getTitleFor(key), model.getValuesFor(key));
 			entryList.add(entry);
+			}
 		}
 		return entryList;
 	}
